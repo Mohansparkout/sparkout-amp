@@ -1173,10 +1173,10 @@
         font-smooth: always;
         -webkit-font-smoothing: antialiased;
       }
-      main {
+      /* main {
         max-width: 700px;
         margin: 0 auto;
-      }
+      } */
       p {
         padding: 0;
         margin: 0;
@@ -1868,7 +1868,10 @@
           width: 280px;
         }
       }
-
+      .main-content-alt {
+    max-width: 700px;
+    margin: auto;
+}
     </style>
   </head>
   <body>
@@ -2036,16 +2039,20 @@
     <main id="content" role="main" class="">
       <article class="recipe-article">
         <header>
-          <span class="ampstart-subtitle block px3 pt4 mb2">Artificial intelligence, Blockchain</span>
+          <amp-img src="../img/AI/ai-blockchain-shaping-future-banner.jpg" width="1280" height="600" layout="responsive" alt="AI blockchain shaping future banner" class="mb4  full-banner"></amp-img>
+
+          
+          <!-- End byline -->
+          
+        </header>
+        <div class="main-content-alt">
+          <span class="ampstart-subtitle block px3 pt2 mb2">Artificial intelligence, Blockchain</span>
           <h1 class="mb3 px3">Blockchain and AI: Creating a Complementary Combo!</h1>
 
           <!-- Start byline -->
           <address class="ampstart-byline clearfix mb4 px3 h5">
             <time class="ampstart-byline-pubdate block bold my1" datetime="2023-06-20">June 20, 2023</time>
           </address>
-          <!-- End byline -->
-          <amp-img src="../img/AI/ai-blockchain-shaping-future-banner.jpg" width="1280" height="853" layout="responsive" alt="AI blockchain shaping future banner" class="mb4 mx3"></amp-img>
-        </header>
         <p class="mb2 px3">
           Here we are going to discuss two giant technologies that are changing the modern world. These critical and rapidly evolving technologies are artificial intelligence and blockchain. At their full power, they operate at two different poles, but the benefits of combining them are beyond our imagination.
         </p> 
@@ -2174,7 +2181,7 @@
         <p class="mb2 px3">
           The synergies between AI and blockchain make our life more better and efficient than ever before. Let's take advantage of this combination as it offers a lot of benefits. It enhances security and privacy, improves automation and efficiency, and increases trust and transparency.
         </p>
-
+      </div>
 
 
           <ul class="ampstart-social-follow list-reset flex justify-around items-center flex-wrap m0 mb2 pt3">
