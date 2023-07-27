@@ -1,0 +1,16 @@
+[27/Jul/2023:12:47:47] (I): WordPress Instance Info:
+[27/Jul/2023:12:47:47] (I): Home URL : http://localhost/industry
+[27/Jul/2023:12:47:47] (I): Site URL : http://localhost/industry
+[27/Jul/2023:12:47:47] (I): WordPress Version : 6.2.2
+[27/Jul/2023:12:47:47] (I): Onboarding Version : 1.1.39
+[27/Jul/2023:12:47:47] (I): Multisite : No
+[27/Jul/2023:12:47:47] (I): Server Info : Apache/2.4.52 (Win64) OpenSSL/1.1.1m PHP/8.1.2
+[27/Jul/2023:12:47:47] (I): PHP Version : 8.1.2
+[27/Jul/2023:12:47:47] (I): HTTPS : No
+[27/Jul/2023:12:47:47] (I): PHP Max Execution Time : 120
+[27/Jul/2023:12:47:47] (I): PHP Max Input Vars : 1000
+[27/Jul/2023:12:47:47] (I): Max Upload Size : 41943040
+[27/Jul/2023:12:47:47] (I): Plugins:
+[27/Jul/2023:12:47:47] (I): [PLUGIN] Image optimization service by Optimole : v3.8.2 (Optimole)
+[27/Jul/2023:12:47:47] (I): [PLUGIN] Otter – Page Builder Blocks &amp; Extensions for Gutenberg : v2.3.2 (ThemeIsle)
+[27/Jul/2023:12:47:47] (I): [PLUGIN] Templates Patterns Collection : v1.1.39 (ThemeIsle)
