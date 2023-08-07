@@ -1,0 +1,28 @@
+04-08-2023 05:15:00 - INFO  - 7.8.9 - 61.0 MB/512 MB - Mechno > Start upgrade from 0.0.0
+04-08-2023 05:15:00 - INFO  - 7.8.9 - 62.5 MB/512 MB - Mechno > Array
+(
+    [`wp_newsletter_emails`] => Created table `wp_newsletter_emails`
+)
+
+04-08-2023 05:15:00 - INFO  - 7.8.9 - 62.5 MB/512 MB - Mechno > Array
+(
+    [`wp_newsletter_sent`] => Created table `wp_newsletter_sent`
+)
+
+04-08-2023 05:15:00 - INFO  - 7.8.9 - 62.5 MB/512 MB - Mechno > Array
+(
+    [`wp_newsletter`] => Created table `wp_newsletter`
+)
+
+04-08-2023 05:15:00 - INFO  - 7.8.9 - 62.5 MB/512 MB - Mechno > Array
+(
+    [`wp_newsletter_user_logs`] => Created table `wp_newsletter_user_logs`
+)
+
+04-08-2023 05:15:00 - INFO  - 7.8.9 - 62.5 MB/512 MB - Mechno > Array
+(
+    [`wp_newsletter_stats`] => Created table `wp_newsletter_stats`
+)
+
+04-08-2023 05:15:00 - INFO  - 7.8.9 - 62.5 MB/512 MB - Mechno > Backing up options of 0.0.0
+04-08-2023 05:15:00 - INFO  - 7.8.9 - 62.5 MB/512 MB - Mechno > End
