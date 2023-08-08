@@ -16,8 +16,8 @@ const startingState = {
     // so use ?.completedAt to check if it's completed with the (.?)
     completedTasks: [],
     inProgressTasks: [],
-    // Optimistically update from local storage - see storage.setItem below
-    ...(JSON.parse(localStorage.getItem(key) || '{}')?.state ?? {}),
+    // initialize the state with default values
+    ...((window.extAssistData.userData.taskData?.data || {})?.state ?? {}),
 }
 
 const state = (set, get) => ({
@@ -86,11 +86,7 @@ const state = (set, get) => ({
 
 const storage = {
     getItem: async () => JSON.stringify(await getTaskData()),
-    setItem: async (k, value) => {
-        // Stash here so we can use it on reload optimistically
-        await saveTaskData(value)
-        localStorage.setItem(k, value)
-    },
+    setItem: async (_, value) => await saveTaskData(value),
     removeItem: () => undefined,
 }
 
@@ -98,6 +94,6 @@ export const useTasksStore = create(
     persist(devtools(state, { name: 'Extendify Assist Tasks' }), {
         name: key,
         storage: createJSONStorage(() => storage),
+        skipHydration: true,
     }),
-    state,
 )

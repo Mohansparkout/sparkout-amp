@@ -68,7 +68,8 @@ class Admin
                 }
 
                 // Don't show on Launch pages.
-                if (filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING) === 'extendify-launch') {
+                // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+                if (isset($_GET['page']) && $_GET['page'] === 'extendify-launch') {
                     return;
                 }
 
@@ -144,6 +145,12 @@ class Admin
      */
     public function enqueueGutenbergAssets()
     {
+        $currentScreen = get_current_screen();
+        // Only load in the post editor.
+        if ($currentScreen->base !== 'post') {
+            return;
+        }
+
         $version = Config::$environment === 'PRODUCTION' ? Config::$version : uniqid();
         $scriptAssetPath = EXTENDIFY_PATH . 'public/build/extendify-draft.asset.php';
         $fallback = [
@@ -163,14 +170,6 @@ class Admin
             $draftDependencies['dependencies'],
             $draftDependencies['version'],
             true
-        );
-
-        \wp_add_inline_script(
-            Config::$slug . '-draft-scripts',
-            'window.extDraftData = ' . wp_json_encode([
-                'root' => \esc_url_raw(Config::$config['api']['draft']),
-            ]),
-            'before'
         );
     }
 }

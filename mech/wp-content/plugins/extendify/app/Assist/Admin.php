@@ -5,6 +5,14 @@
 
 namespace Extendify\Assist;
 
+use Extendify\Assist\DataProvider\ResourceData;
+use Extendify\Assist\Controllers\GlobalsController;
+use Extendify\Assist\Controllers\RecommendationsController;
+use Extendify\Assist\Controllers\RouterController;
+use Extendify\Assist\Controllers\SupportArticlesController;
+use Extendify\Assist\Controllers\TasksController;
+use Extendify\Assist\Controllers\TourController;
+use Extendify\Assist\Controllers\UserSelectionController;
 use Extendify\Config;
 
 /**
@@ -44,6 +52,8 @@ class Admin
                 show_admin_bar(false);
             }
         });
+
+        ResourceData::scheduleCache();
     }
 
     /**
@@ -77,6 +87,13 @@ class Admin
 
                 $version = Config::$environment === 'PRODUCTION' ? Config::$version : uniqid();
 
+                $siteInstalled = \get_users([
+                    'orderby' => 'registered',
+                    'order' => 'ASC',
+                    'number' => 1,
+                    'fields' => ['user_registered'],
+                ])[0]->user_registered;
+
                 $this->enqueueGutenbergAssets();
 
                 $assistState = get_option('extendify_assist_globals');
@@ -92,6 +109,7 @@ class Admin
                         'nonce' => \wp_create_nonce('wp_rest'),
                         'adminUrl' => \esc_url_raw(\admin_url()),
                         'home' => \esc_url_raw(\get_home_url()),
+                        'siteCreatedAt' => $siteInstalled ? $siteInstalled : null,
                         'asset_path' => \esc_url(EXTENDIFY_URL . 'public/assets'),
                         'launchCompleted' => Config::$launchCompleted,
                         'dismissedNotices' => $dismissed,
@@ -101,6 +119,16 @@ class Admin
                         'blockTheme' => wp_is_block_theme(),
                         'themeSlug' => get_option('stylesheet'),
                         'wpLanguage' => \get_locale(),
+                        'userData' => [
+                            'taskData' => TasksController::get(),
+                            'tourData' => TourController::get(),
+                            'globalData' => GlobalsController::get(),
+                            'userSelectionData' => UserSelectionController::get(),
+                            'recommendationData' => RecommendationsController::get(),
+                            'supportArticlesData' => SupportArticlesController::get(),
+                            'routerData' => RouterController::get(),
+                        ],
+                        'resourceData' => (new ResourceData())->getData(),
                     ]),
                     'before'
                 );
@@ -210,7 +238,7 @@ class Admin
 
         if (is_wp_error($response)) {
             // Set one hour transient to avoid constant retrying.
-            set_transient('extendify_partner_settings', $data, HOUR_IN_SECONDS);
+            set_transient('extendify_partner_settings', [], HOUR_IN_SECONDS);
             return get_option('extendify_partner_settings', []);
         }
 

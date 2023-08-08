@@ -1,14 +1,12 @@
-import { Spinner } from '@wordpress/components'
 import { __, sprintf } from '@wordpress/i18n'
 import { chevronRightSmall, Icon } from '@wordpress/icons'
-import { useTours } from '@assist/hooks/useTours'
 import { useTourStore } from '@assist/state/Tours'
 import { ToursPlay } from '@assist/svg'
 import { ToursRestart } from '@assist/svg'
 import availableTours from '@assist/tours/tours.js'
 
 export const Tours = () => {
-    const { tours, loading, error } = useTours()
+    const tours = window.extAssistData.resourceData.tours
     const { startTour, wasOpened } = useTourStore()
 
     const getIcon = (slug) => {
@@ -16,14 +14,6 @@ export const Tours = () => {
             return <ToursRestart className="w-5 h-5 group-hover:fill-current" />
         }
         return <ToursPlay className="w-5 h-5 group-hover:fill-current" />
-    }
-
-    if (loading || error) {
-        return (
-            <div className="assist-tours-module w-full flex justify-center bg-white p-4 lg:p-8">
-                <Spinner />
-            </div>
-        )
     }
 
     if (tours.length === 0) {
@@ -54,7 +44,9 @@ export const Tours = () => {
                     </a>
                 )}
             </div>
-            <div className="w-full text-base flex flex-col gap-3 mt-4 relative">
+            <div
+                className="w-full text-base flex flex-col gap-3 mt-4 relative"
+                id="assist-tours-module-list">
                 {tours.slice(0, 5).map(({ title, slug }) => (
                     <button
                         key={slug}

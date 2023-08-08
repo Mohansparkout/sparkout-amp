@@ -43,7 +43,7 @@ class Admin
                     return;
                 }
 
-                $siteSettings = json_decode(get_option('extendifysdk_sitesettings', null));
+                $siteSettings = json_decode(get_option('extendifysdk_sitesettings', '{"state":{}}'));
                 if (!isset($siteSettings->state->activateLegacyClasses) || $siteSettings->state->activateLegacyClasses === false) {
                     if ($siteSettings === null) {
                         $siteSettings = json_decode('{"state":{"enabled":true,"activateLegacyClasses":true}}');
@@ -140,7 +140,8 @@ class Admin
             return $hook && in_array($hook, ['post.php', 'post-new.php'], true);
         }
 
-        return $hook && in_array($hook, ['site-editor.php'], true);
+        // Temporarily disable the library on the site editor page until the issues with 6.3 are fixed.
+        return false;
     }
 
     /**

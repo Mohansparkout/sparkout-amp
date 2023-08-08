@@ -26,15 +26,17 @@ class TasksController
         $plugins = WPController::getActivePlugins()->get_data();
         $response = Http::get('/tasks');
 
-        $data = array_filter($response['data'], function ($item) use ($plugins) {
-            if (empty($item['plugins'])) {
-                return true;
-            }
+        if (is_array($response) && array_key_exists('data', $response)) {
+            $data = array_filter($response['data'], function ($item) use ($plugins) {
+                if (empty($item['plugins'])) {
+                    return true;
+                }
 
-            return array_intersect($item['plugins'], $plugins['data']);
-        });
+                return array_intersect($item['plugins'], $plugins['data']);
+            });
 
-        $response['data'] = array_values($data);
+            $response['data'] = array_values($data);
+        }
 
         return new \WP_REST_Response(
             $response,

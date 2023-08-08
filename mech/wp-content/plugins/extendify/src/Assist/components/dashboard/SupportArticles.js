@@ -1,24 +1,14 @@
-import { Spinner } from '@wordpress/components'
 import { __ } from '@wordpress/i18n'
 import { Icon, chevronRightSmall } from '@wordpress/icons'
 import { useRouter } from '@assist/hooks/useRouter'
-import { useSupportArticles } from '@assist/hooks/useSupportArticles'
 import { useKnowledgeBaseStore } from '@assist/state/KnowledgeBase'
 import { arrowTurnRight } from '@assist/svg'
 
 export const SupportArticles = () => {
-    const { data: articles, loading, error } = useSupportArticles()
+    const articles = window.extAssistData.resourceData.supportArticles
     const { navigateTo } = useRouter()
     const { pushArticle, clearArticles, reset } = useKnowledgeBaseStore()
     const userLanguage = window.extAssistData.wpLanguage
-
-    if (loading || error) {
-        return (
-            <div className="assist-knowledge-base-module w-full flex justify-center bg-white p-4 lg:p-8">
-                <Spinner />
-            </div>
-        )
-    }
 
     if (articles && articles?.length === 0) {
         return (
@@ -46,7 +36,9 @@ export const SupportArticles = () => {
                     <Icon icon={chevronRightSmall} className="fill-current" />
                 </a>
             </div>
-            <div className="w-full mx-auto text-sm mt-4 flex flex-col gap-2">
+            <div
+                className="w-full mx-auto text-sm mt-4 flex flex-col gap-2"
+                id="assist-knowledge-base-module-list">
                 {articles.slice(0, 5).map(({ slug, extendifyTitle }) => (
                     <button
                         aria-label={extendifyTitle}

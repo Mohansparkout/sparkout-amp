@@ -106,12 +106,12 @@ class Http
             ]
         );
 
-        if ((int) $response['response']['code'] >= 500) {
-            wp_send_json_error($response['response']['message'], $response['response']['code']);
-        }
-
         if (\is_wp_error($response)) {
             return $response;
+        }
+
+        if ((int) $response['response']['code'] >= 500) {
+            return new \WP_Error($response['response']['code'], $response['response']['message']);
         }
 
         $responseBody = \wp_remote_retrieve_body($response);

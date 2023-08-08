@@ -1,7 +1,7 @@
 import { useEffect, useState } from '@wordpress/element'
 import { completion } from '@draft/api/Data'
 
-export const useCompletion = (prompt) => {
+export const useCompletion = (prompt, promptType, systemMessageKey) => {
     const [result, setResult] = useState('')
     const [error, setError] = useState(null)
     const [loading, setLoading] = useState(false)
@@ -13,6 +13,7 @@ export const useCompletion = (prompt) => {
 
         if (!prompt) {
             setLoading(false)
+            setResult('')
             cancelled = true
             return
         }
@@ -22,7 +23,11 @@ export const useCompletion = (prompt) => {
             setError(false)
             setLoading(true)
 
-            const response = await completion(prompt)
+            const response = await completion(
+                prompt,
+                promptType,
+                systemMessageKey,
+            )
             reader = response.body.getReader()
 
             let done = false
@@ -56,7 +61,7 @@ export const useCompletion = (prompt) => {
                 reader.cancel()
             }
         }
-    }, [prompt])
+    }, [prompt, systemMessageKey, promptType])
 
     return { completion: result, error, loading }
 }

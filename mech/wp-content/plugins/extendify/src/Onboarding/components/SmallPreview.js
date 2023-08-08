@@ -109,7 +109,7 @@ export const SmallPreview = ({ style, onSelect }) => {
 
             const style = `<style id="ext-tj">${transformedStyles}${styleOverrides}</style>`
             if (!doc?.getElementById('ext-tj')) {
-                doc?.head?.insertAdjacentHTML('beforeend', style)
+                doc?.body?.insertAdjacentHTML('beforeend', style)
             }
             timer2 = setTimeout(() => isMounted.current && setLoaded(true), 100)
             clearTimeout(timer)

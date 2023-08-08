@@ -20,5 +20,4 @@ export const useGlobalSyncStore = create(
     persist(devtools(state, { name: 'Extendify Assist Globals Sync' }), {
         name: 'extendify-assist-globals-sync',
     }),
-    state,
 )

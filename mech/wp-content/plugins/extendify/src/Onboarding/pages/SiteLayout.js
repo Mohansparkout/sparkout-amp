@@ -139,7 +139,7 @@ export const SiteLayout = () => {
                             </AnimatePresence>
                             <span aria-hidden="true">
                                 {currentStyle?.slug === style.slug ? (
-                                    <Checkmark className="absolute top-0 right-0 m-2 text-design-text bg-design-main w-6 h-6 z-50 rounded-full transform translate-x-5 -translate-y-5" />
+                                    <Checkmark className="absolute top-0 right-0 m-2 text-design-text bg-design-main w-6 h-6 z-40 rounded-full transform translate-x-5 -translate-y-5" />
                                 ) : null}
                             </span>
                         </div>

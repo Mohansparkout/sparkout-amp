@@ -10,6 +10,7 @@ import {
     getOption,
     getPageById,
     getActivePlugins,
+    prefetchAssistData,
 } from '@onboarding/api/WPApi'
 import { useConfetti } from '@onboarding/hooks/useConfetti'
 import { useWarnOnLeave } from '@onboarding/hooks/useWarnOnLeave'
@@ -60,9 +61,10 @@ export const CreatingSite = () => {
 
             if (plugins?.length) {
                 inform(__('Installing suggested plugins', 'extendify'))
-                for (const [index, plugin] of plugins.entries()) {
-                    // TODO: instead of updating here, we could have a progress component
-                    // that we can update a % of the width every index/n
+                const pluginsGiveFirst = [...plugins].sort(
+                    ({ wordpressSlug }) => (wordpressSlug === 'give' ? -1 : 1),
+                )
+                for (const [index, plugin] of pluginsGiveFirst.entries()) {
                     informDesc(
                         __(
                             `${index + 1}/${plugins.length}: ${plugin.name}`,
@@ -78,6 +80,11 @@ export const CreatingSite = () => {
                         await installPlugin(plugin)
                     }
                 }
+
+                inform(__('Populating data', 'extendify'))
+                informDesc(__('Personalizing your experience...', 'extendify'))
+                await prefetchAssistData()
+                await waitFor200Response()
             }
 
             let pageIds, navPages

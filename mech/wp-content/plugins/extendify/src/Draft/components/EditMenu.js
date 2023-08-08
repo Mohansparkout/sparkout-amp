@@ -1,62 +1,142 @@
 import { MenuGroup, MenuItem } from '@wordpress/components'
+import { useSelect } from '@wordpress/data'
+import { useEffect } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { Icon } from '@wordpress/icons'
+import { useContentHighlight } from '@draft/hooks/useContentHighlight'
 import { wand, check, shorter, longer, magic } from '@draft/svg'
 
-export const EditMenu = ({ disabled, completion, setInputText, setPrompt }) => {
-    const handleClick = (prompt) => {
-        setInputText('')
-        setPrompt(prompt + '\n\n' + completion)
+export const EditMenu = ({ disabled, setPrompt }) => {
+    const { toggleHighlight } = useContentHighlight()
+    const selectedBlockClientIds = useSelect(
+        (select) => select('core/block-editor').getSelectedBlockClientIds(),
+        [],
+    )
+    const { getBlocksByClientId } = useSelect(
+        (select) => select('core/block-editor'),
+        [],
+    )
+
+    useEffect(() => {
+        return () => {
+            toggleHighlight(selectedBlockClientIds, { isHighlighted: false })
+        }
+    }, [selectedBlockClientIds, toggleHighlight])
+
+    const handleClick = (promptType) => {
+        setPrompt({
+            text: getSelectedContent(),
+            promptType,
+            systemMessageKey: 'edit',
+        })
+    }
+
+    const getSelectedContent = () => {
+        const selectedBlocks = getBlocksByClientId(selectedBlockClientIds)
+        return selectedBlocks
+            .map(({ attributes }) => attributes.content)
+            .join('\n\n')
     }
 
     return (
         <MenuGroup>
             <MenuItem
-                onClick={() => handleClick('Improve the writing of this text:')}
-                disabled={disabled}>
+                onClick={() => handleClick('improve-writing')}
+                onMouseEnter={() =>
+                    toggleHighlight(selectedBlockClientIds, {
+                        isHighlighted: true,
+                    })
+                }
+                onMouseLeave={() =>
+                    toggleHighlight(selectedBlockClientIds, {
+                        isHighlighted: false,
+                    })
+                }
+                disabled={disabled}
+                className="group">
                 <Icon
                     icon={wand}
-                    className="text-design-main fill-current w-5 h-5 mr-2"
+                    className="group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
                 />
                 {__('Improve writing', 'extendify')}
             </MenuItem>
             <MenuItem
-                onClick={() =>
-                    handleClick('Fix the spelling and grammar of this text:')
+                onClick={() => handleClick('fix-spelling-grammar')}
+                onMouseEnter={() =>
+                    toggleHighlight(selectedBlockClientIds, {
+                        isHighlighted: true,
+                    })
                 }
-                disabled={disabled}>
+                onMouseLeave={() =>
+                    toggleHighlight(selectedBlockClientIds, {
+                        isHighlighted: false,
+                    })
+                }
+                disabled={disabled}
+                className="group">
                 <Icon
                     icon={check}
-                    className="text-design-main fill-current w-5 h-5 mr-2"
+                    className="group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
                 />
                 {__('Fix spelling & grammar', 'extendify')}
             </MenuItem>
             <MenuItem
-                onClick={() => handleClick('Make this text shorter:')}
-                disabled={disabled}>
+                onClick={() => handleClick('make-shorter')}
+                onMouseEnter={() =>
+                    toggleHighlight(selectedBlockClientIds, {
+                        isHighlighted: true,
+                    })
+                }
+                onMouseLeave={() =>
+                    toggleHighlight(selectedBlockClientIds, {
+                        isHighlighted: false,
+                    })
+                }
+                disabled={disabled}
+                className="group">
                 <Icon
                     icon={shorter}
-                    className="text-design-main fill-current w-5 h-5 mr-2"
+                    className="group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
                 />
                 {__('Make shorter', 'extendify')}
             </MenuItem>
             <MenuItem
-                onClick={() => handleClick('Make this text longer:')}
-                disabled={disabled}>
+                onClick={() => handleClick('make-longer')}
+                onMouseEnter={() =>
+                    toggleHighlight(selectedBlockClientIds, {
+                        isHighlighted: true,
+                    })
+                }
+                onMouseLeave={() =>
+                    toggleHighlight(selectedBlockClientIds, {
+                        isHighlighted: false,
+                    })
+                }
+                disabled={disabled}
+                className="group">
                 <Icon
                     icon={longer}
-                    className="text-design-main fill-current w-5 h-5 mr-2"
+                    className="group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
                 />
                 {__('Make longer', 'extendify')}
             </MenuItem>
             <MenuItem
-                onClick={() =>
-                    handleClick('Simplify the language of this text:')
+                onClick={() => handleClick('simplify-language')}
+                onMouseEnter={() =>
+                    toggleHighlight(selectedBlockClientIds, {
+                        isHighlighted: true,
+                    })
                 }
-                disabled={disabled}>
+                onMouseLeave={() =>
+                    toggleHighlight(selectedBlockClientIds, {
+                        isHighlighted: false,
+                    })
+                }
+                disabled={disabled}
+                className="group">
                 <Icon
                     icon={magic}
-                    className="text-design-main fill-current w-5 h-5 mr-2"
+                    className="group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
                 />
                 {__('Simplify language', 'extendify')}
             </MenuItem>

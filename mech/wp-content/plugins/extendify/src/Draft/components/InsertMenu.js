@@ -1,18 +1,31 @@
 import { createBlock, pasteHandler } from '@wordpress/blocks'
-import { MenuGroup, MenuItem } from '@wordpress/components'
+import {
+    MenuGroup,
+    MenuItem,
+    __experimentalDivider as Divider,
+} from '@wordpress/components'
 import { useDispatch, useSelect } from '@wordpress/data'
+import { useEffect } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
 import { Icon } from '@wordpress/icons'
-import { replace, below } from '@draft/svg'
+import { useContentHighlight } from '@draft/hooks/useContentHighlight'
+import { replace, replay, below, trash, shorter, longer } from '@draft/svg'
 
-export const InsertMenu = ({ completion, setPrompt }) => {
+export const InsertMenu = ({
+    prompt,
+    completion,
+    loading,
+    setPrompt,
+    setInputText,
+}) => {
+    const { toggleHighlight, toggleInsertionPoint } = useContentHighlight()
     const { insertBlocks, replaceBlocks } = useDispatch('core/block-editor')
     const selectedBlock = useSelect(
         (select) => select('core/block-editor').getSelectedBlock(),
         [],
     )
-    const blockOrder = useSelect(
-        (select) => select('core/block-editor').getBlockOrder(),
+    const selectedBlockClientIds = useSelect(
+        (select) => select('core/block-editor').getSelectedBlockClientIds(),
         [],
     )
     const { getBlockRootClientId, getBlockIndex, getBlock } = useSelect(
@@ -20,11 +33,32 @@ export const InsertMenu = ({ completion, setPrompt }) => {
         [],
     )
 
-    const insertBelow = (targetBlock, replace = false) => {
-        const parentBlockId = getBlockRootClientId(targetBlock.clientId)
-        const blockIndex = getBlockIndex(targetBlock.clientId, parentBlockId)
+    const canReplaceContent = () => {
+        const targetBlock = selectedBlock
+            ? selectedBlock
+            : getBlock(selectedBlockClientIds[0])
+        if (!targetBlock) {
+            return true
+        }
+        return typeof targetBlock?.attributes?.content === 'undefined'
+    }
 
-        let blocks = pasteHandler({ plainText: completion })
+    const transformBlocks = (blocks, targetBlockId) => {
+        const targetBlock = getBlock(targetBlockId)
+        return blocks.map((block) => {
+            return {
+                ...block,
+                name: targetBlock.name,
+                attributes: {
+                    ...targetBlock.attributes,
+                    content: block.attributes.content,
+                },
+            }
+        })
+    }
+
+    const plainTextToBlocks = (plainText) => {
+        let blocks = pasteHandler({ plainText: plainText })
         if (!Array.isArray(blocks)) {
             blocks = [
                 createBlock('core/paragraph', {
@@ -32,37 +66,120 @@ export const InsertMenu = ({ completion, setPrompt }) => {
                 }),
             ]
         }
+        return blocks
+    }
 
-        if (replace || targetBlock.attributes?.content === '') {
-            replaceBlocks(targetBlock.clientId, blocks)
+    const insertCompletion = ({ replaceContent = false }) => {
+        setPrompt({ text: '', promptType: '', systemMessageKey: '' })
+
+        const targetBlockId = selectedBlock
+            ? selectedBlock?.clientId
+            : selectedBlockClientIds[0]
+
+        let blocks = plainTextToBlocks(completion)
+
+        if (selectedBlock && selectedBlock?.attributes?.content === '') {
+            replaceContent = true
+        }
+
+        if (replaceContent) {
+            blocks = transformBlocks(blocks, targetBlockId)
+            replaceBlocks(selectedBlockClientIds, blocks)
+        } else if (!targetBlockId) {
+            insertBlocks(blocks)
         } else {
+            const parentBlockId = getBlockRootClientId(targetBlockId)
+            const blockIndex = getBlockIndex(
+                selectedBlockClientIds.at(-1),
+                parentBlockId,
+            )
+            if (parentBlockId) {
+                blocks = transformBlocks(blocks, targetBlockId)
+            }
             insertBlocks(blocks, blockIndex + 1, parentBlockId)
         }
     }
 
+    const handleEdit = (promptType) => {
+        setInputText('')
+        setPrompt({
+            text: completion,
+            promptType,
+            systemMessageKey: 'edit',
+        })
+    }
+
+    const discard = () => {
+        setInputText('')
+        setPrompt({ text: '', promptType: '', systemMessageKey: '' })
+    }
+
+    const retry = () => {
+        setInputText('')
+        setPrompt({ text: '', promptType: '', systemMessageKey: '' })
+        setTimeout(() => setPrompt(prompt))
+    }
+
+    useEffect(() => {
+        return () => {
+            toggleHighlight(selectedBlockClientIds, { isHighlighted: false })
+        }
+    }, [selectedBlockClientIds, toggleHighlight])
+
     return (
-        <MenuGroup className="mt-4">
+        <MenuGroup>
             <MenuItem
-                onClick={() => {
-                    setPrompt('')
-                    insertBelow(selectedBlock, true)
-                }}
-                disabled={!selectedBlock}>
+                onClick={() => insertCompletion({ replaceContent: true })}
+                onMouseEnter={() =>
+                    toggleHighlight(selectedBlockClientIds, {
+                        isHighlighted: true,
+                    })
+                }
+                onMouseLeave={() =>
+                    toggleHighlight(selectedBlockClientIds, {
+                        isHighlighted: false,
+                    })
+                }
+                disabled={loading || canReplaceContent()}>
                 <Icon icon={replace} className="fill-current w-5 h-5 mr-2" />
                 {__('Replace selected block text', 'extendify')}
             </MenuItem>
             <MenuItem
-                onClick={() => {
-                    setPrompt('')
-                    insertBelow(
-                        selectedBlock
-                            ? selectedBlock
-                            : getBlock(blockOrder[blockOrder.length - 1]),
-                        false,
-                    )
-                }}>
+                onClick={() => insertCompletion({ replaceContent: false })}
+                onMouseEnter={() => toggleInsertionPoint(true)}
+                onMouseLeave={() => toggleInsertionPoint(false)}
+                disabled={loading}>
                 <Icon icon={below} className="fill-current w-5 h-5 mr-2" />
                 {__('Insert below', 'extendify')}
+            </MenuItem>
+            <MenuItem
+                onClick={() => handleEdit('make-shorter')}
+                disabled={loading}
+                className="group">
+                <Icon
+                    icon={shorter}
+                    className="group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
+                />
+                {__('Make shorter', 'extendify')}
+            </MenuItem>
+            <MenuItem
+                onClick={() => handleEdit('make-longer')}
+                disabled={loading}
+                className="group">
+                <Icon
+                    icon={longer}
+                    className="group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
+                />
+                {__('Make longer', 'extendify')}
+            </MenuItem>
+            <Divider />
+            <MenuItem onClick={retry} disabled={loading}>
+                <Icon icon={replay} className="fill-current w-5 h-5 mr-2" />
+                {__('Try again', 'extendify')}
+            </MenuItem>
+            <MenuItem onClick={discard} disabled={loading}>
+                <Icon icon={trash} className="fill-current w-5 h-5 mr-2" />
+                {__('Discard', 'extendify')}
             </MenuItem>
         </MenuGroup>
     )

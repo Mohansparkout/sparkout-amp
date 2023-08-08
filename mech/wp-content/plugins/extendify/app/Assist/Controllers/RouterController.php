@@ -5,8 +5,6 @@
 
 namespace Extendify\Assist\Controllers;
 
-use Extendify\Http;
-
 if (!defined('ABSPATH')) {
     die('No direct access.');
 }

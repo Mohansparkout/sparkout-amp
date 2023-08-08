@@ -1,17 +1,15 @@
-import { Spinner } from '@wordpress/components'
 import { useEffect } from '@wordpress/element'
 import { sprintf, __ } from '@wordpress/i18n'
 import { Icon, chevronRightSmall } from '@wordpress/icons'
 import { motion, AnimatePresence } from 'framer-motion'
 import { TaskBadge } from '@assist/components/TaskBadge'
 import { TaskItem } from '@assist/components/task-items/TaskItem'
-import { useTasks } from '@assist/hooks/useTasks'
 import { useTasksStore } from '@assist/state/Tasks'
 import { Confetti } from '@assist/svg'
 
 export const TasksList = () => {
     const { seeTask, isCompleted } = useTasksStore()
-    const { tasks, loading, error } = useTasks()
+    const tasks = window.extAssistData.resourceData.tasks
 
     const notCompleted = tasks?.filter((task) => !isCompleted(task.slug))
 
@@ -20,14 +18,6 @@ export const TasksList = () => {
         // Mark all tasks as seen. If always seen they will not update.
         notCompleted.forEach((task) => seeTask(task.slug))
     }, [notCompleted, seeTask])
-
-    if (loading || error) {
-        return (
-            <div className="assist-tasks-module w-full flex justify-center bg-white border border-gray-300 p-2 lg:p-4 mb-6 rounded">
-                <Spinner />
-            </div>
-        )
-    }
 
     if (tasks?.length === 0) {
         return (
@@ -72,7 +62,9 @@ export const TasksList = () => {
             {notCompleted.length === 0 ? (
                 <TasksCompleted />
             ) : (
-                <div className="border border-b-0 border-gray-300 mt-4">
+                <div
+                    className="border border-b-0 border-gray-300 mt-4"
+                    id="assist-tasks-module-list">
                     <AnimatePresence>
                         {notCompleted.slice(0, 5).map((task) => (
                             <motion.div
@@ -112,7 +104,7 @@ const TaskItemWrapper = ({ task, Action }) => (
 
 const TasksCompleted = () => {
     return (
-        <div className="flex flex-col items-center justify-center border-b border-gray-300 p-4 lg:p-8">
+        <div className="flex flex-col items-center justify-center border-gray-300 p-4 lg:p-8">
             <Confetti aria-hidden={true} />
             <p className="mb-0 text-lg font-bold">
                 {__('All caught up!', 'extendify')}

@@ -1,14 +1,14 @@
 import { create } from 'zustand'
 import { devtools, persist, createJSONStorage } from 'zustand/middleware'
-import { getGlobalData, saveGlobalData } from '../api/Data'
+import { getGlobalData, saveGlobalData } from '@assist/api/Data'
 
 const key = 'extendify-assist-globals'
 const startingState = {
     dismissedNotices: [],
     dismissedBanners: [],
     modals: [],
-    // Optimistically update from local storage - see storage.setItem below
-    ...(JSON.parse(localStorage.getItem(key) || '{}')?.state ?? {}),
+    // initialize the state with default values
+    ...((window.extAssistData.userData.globalData?.data || {})?.state ?? {}),
 }
 
 const state = (set, get) => ({
@@ -46,11 +46,7 @@ const state = (set, get) => ({
 
 const storage = {
     getItem: async () => JSON.stringify(await getGlobalData()),
-    setItem: async (k, value) => {
-        // Stash here so we can use it on reload optimistically
-        await saveGlobalData(value)
-        localStorage.setItem(k, value)
-    },
+    setItem: async (_, value) => await saveGlobalData(value),
     removeItem: () => undefined,
 }
 
@@ -58,10 +54,10 @@ export const useGlobalStore = create(
     persist(devtools(state, { name: 'Extendify Assist Globals' }), {
         name: key,
         storage: createJSONStorage(() => storage),
+        skipHydration: true,
         partialize: (state) => {
             delete state.modals
             return state
         },
     }),
-    state,
 )

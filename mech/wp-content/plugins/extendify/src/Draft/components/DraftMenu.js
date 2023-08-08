@@ -17,10 +17,11 @@ export const DraftMenu = ({ disabled, setInputText, setReady }) => {
                     handleClick(
                         __('Write a blog post about', 'extendify') + ' ',
                     )
-                }>
+                }
+                className="group">
                 <Icon
                     icon={pencil}
-                    className="text-design-main fill-current w-5 h-5 mr-2"
+                    className="group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
                 />
                 {__('Blog post…', 'extendify')}
             </MenuItem>
@@ -28,10 +29,11 @@ export const DraftMenu = ({ disabled, setInputText, setReady }) => {
                 disabled={disabled}
                 onClick={() =>
                     handleClick(__('Write an outline for', 'extendify') + ' ')
-                }>
+                }
+                className="group">
                 <Icon
                     icon={pencil}
-                    className="text-design-main fill-current w-5 h-5 mr-2"
+                    className="group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
                 />
                 {__('Outline…', 'extendify')}
             </MenuItem>
@@ -39,10 +41,11 @@ export const DraftMenu = ({ disabled, setInputText, setReady }) => {
                 disabled={disabled}
                 onClick={() =>
                     handleClick(__('Write a poem about', 'extendify') + ' ')
-                }>
+                }
+                className="group">
                 <Icon
                     icon={pencil}
-                    className="text-design-main fill-current w-5 h-5 mr-2"
+                    className="group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
                 />
                 {__('Poem…', 'extendify')}
             </MenuItem>
@@ -52,10 +55,11 @@ export const DraftMenu = ({ disabled, setInputText, setReady }) => {
                     handleClick(
                         __('Write a press release for', 'extendify') + ' ',
                     )
-                }>
+                }
+                className="group">
                 <Icon
                     icon={pencil}
-                    className="text-design-main fill-current w-5 h-5 mr-2"
+                    className="group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
                 />
                 {__('Press release…', 'extendify')}
             </MenuItem>
@@ -65,10 +69,11 @@ export const DraftMenu = ({ disabled, setInputText, setReady }) => {
                     handleClick(
                         __('Write a pros and cons list for', 'extendify') + ' ',
                     )
-                }>
+                }
+                className="group">
                 <Icon
                     icon={pencil}
-                    className="text-design-main fill-current w-5 h-5 mr-2"
+                    className="group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
                 />
                 {__('Pros and cons list…', 'extendify')}
             </MenuItem>
@@ -78,10 +83,11 @@ export const DraftMenu = ({ disabled, setInputText, setReady }) => {
                     handleClick(
                         __('Write a job description for', 'extendify') + ' ',
                     )
-                }>
+                }
+                className="group">
                 <Icon
                     icon={pencil}
-                    className="text-design-main fill-current w-5 h-5 mr-2"
+                    className="group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
                 />
                 {__('Job description…', 'extendify')}
             </MenuItem>

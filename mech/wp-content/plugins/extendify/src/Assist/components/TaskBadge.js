@@ -1,9 +1,8 @@
-import { useTasks } from '@assist/hooks/useTasks'
 import { useTasksStore } from '@assist/state/Tasks'
 
 export const TaskBadge = (props) => {
     const { isCompleted } = useTasksStore()
-    const { tasks } = useTasks()
+    const tasks = window.extAssistData.resourceData.tasks
     const { themeSlug, launchCompleted } = window.extAssistData
     if (themeSlug !== 'extendable' || !launchCompleted) return null
     const taskCount =

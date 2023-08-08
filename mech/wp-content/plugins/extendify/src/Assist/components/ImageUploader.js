@@ -69,7 +69,7 @@ export const ImageUploader = ({ type, onUpdate, title, actionLabel }) => {
                         <div className="relative block">
                             <Button
                                 className={
-                                    'editor-post-featured-image__toggle extendify-assist-upload-logo p-0 m-0 border-0 cursor-pointer block w-full min-w-full text-center relative bg-gray-100 hover:bg-gray-300 hover:text-current h-48 items-center text-gray-900'
+                                    'editor-post-featured-image__toggle extendify-assist-upload-logo p-0 m-0 border-0 cursor-pointer flex w-full min-w-full text-center relative bg-gray-100 hover:bg-gray-300 hover:text-current h-48 justify-center text-gray-900'
                                 }
                                 onClick={open}
                                 aria-label={
@@ -92,7 +92,7 @@ export const ImageUploader = ({ type, onUpdate, title, actionLabel }) => {
                                             naturalHeight={mediaHeight}
                                             isInline>
                                             <img
-                                                className="block m-auto w-auto h-auto max-w-full max-h-full absolute inset-0 p-6"
+                                                className="block m-auto w-auto h-auto max-w-full max-h-48 inset-0 p-6"
                                                 src={mediaSourceUrl}
                                                 alt=""
                                             />

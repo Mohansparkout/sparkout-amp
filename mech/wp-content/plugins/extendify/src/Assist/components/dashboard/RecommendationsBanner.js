@@ -1,15 +1,11 @@
 import { __ } from '@wordpress/i18n'
 import { cancelCircleFilled, Icon } from '@wordpress/icons'
-import { useRecommendationsBanner } from '@assist/hooks/useRecommendationsBanner'
 import { useGlobalStore } from '@assist/state/Global'
 
 export const RecommendationsBanner = () => {
     const { isDismissedBanner, dismissBanner } = useGlobalStore()
-    const { recommendationsBanner, loading, error } = useRecommendationsBanner()
-
-    if (error || loading) {
-        return null
-    }
+    const recommendationsBanner =
+        window.extAssistData.resourceData.recommendationsBanner
 
     // Don't show the banner if the Welcome banner is active.
     const welcomeDismissed = window.extAssistData.dismissedNotices.find(

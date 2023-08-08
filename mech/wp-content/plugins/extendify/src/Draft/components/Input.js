@@ -18,7 +18,11 @@ export const Input = ({
 
         if (!ready || loading) return
 
-        setPrompt(inputText)
+        setPrompt({
+            text: inputText,
+            promptType: 'create',
+            systemMessageKey: 'generate',
+        })
         setInputText('')
         setReady(false)
     }

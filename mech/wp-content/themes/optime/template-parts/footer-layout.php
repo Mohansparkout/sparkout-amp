@@ -83,7 +83,7 @@ if(class_exists('Newsletter') && !empty($footer_newsletter_form) && $show_newsle
                             if ($footer_copyright) {
                                 echo wp_kses_post($footer_copyright);
                             } else {
-                                echo wp_kses_post('&copy;'.esc_attr(date("Y")).' Optime, with Love by'.' <a target="_blank" href="https://themeforest.net/user/7oroof">7oroof.com</a>');
+                                echo wp_kses_post('&copy;'.esc_attr(date("Y")).' Mechnovation Technologies');
                             } ?>
                         </div>
                         <?php if ( is_active_sidebar( 'sidebar-footer-bottom' )) : ?>

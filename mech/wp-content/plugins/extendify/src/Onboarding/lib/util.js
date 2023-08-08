@@ -11,7 +11,12 @@ export const stripUrlParams = (url) => url?.[0]?.url?.split(/[?#]/)?.[0]
 export const lowerImageQuality = (html) => {
     return html.replace(/\w+:\/\/\S*(w=(\d*))&\w+\S*"/g, (url, w, width) =>
         // Could lower the width here if needed
-        url.replace(w, 'w=' + Math.floor(Number(width)) + '&q=10'),
+        url.replace(
+            w,
+            'w=' +
+                Math.floor(Number(width)) +
+                '&q=10&auto=format,compress&fm=avif',
+        ),
     )
 }
 

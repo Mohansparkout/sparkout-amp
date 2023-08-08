@@ -13,8 +13,9 @@ const startingState = {
     pages: [],
     plugins: [],
     goals: [],
-    // Optimistically update from local storage - see storage.setItem below
-    ...(JSON.parse(localStorage.getItem(key) || '{}')?.state ?? {}),
+    // initialize the state with default values
+    ...((window.extAssistData.userData.userSelectionData?.data || {})?.state ??
+        {}),
 }
 
 const state = () => ({
@@ -24,11 +25,7 @@ const state = () => ({
 
 const storage = {
     getItem: async () => JSON.stringify(await getUserSelectionData()),
-    setItem: async (k, value) => {
-        // Stash here so we can use it on reload optimistically
-        await saveUserSelectionData(value)
-        localStorage.setItem(k, value)
-    },
+    setItem: async (_, value) => await saveUserSelectionData(value),
     removeItem: () => undefined,
 }
 
@@ -36,6 +33,7 @@ export const useSelectionStore = create(
     persist(devtools(state, { name: 'Extendify User Selections' }), {
         name: key,
         storage: createJSONStorage(() => storage),
+        skipHydration: true,
     }),
     state,
 )

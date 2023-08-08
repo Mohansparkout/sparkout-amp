@@ -5,11 +5,13 @@ import { getRecommendationData, saveRecommendationData } from '../api/Data'
 const key = 'extendify-assist-recommendations'
 const startingState = {
     viewedRecommendations: [],
-    // Optimistically update from local storage - see storage.setItem below
-    ...(JSON.parse(localStorage.getItem(key) || '{}')?.state ?? {}),
+    dismissedRecommendations: [],
+    // initialize the state with default values
+    ...((window.extAssistData.userData.recommendationData?.data || {})?.state ??
+        {}),
 }
 
-const state = (set) => ({
+const state = (set, get) => ({
     ...startingState,
     track(slug) {
         const lastViewedAt = new Date().toISOString()
@@ -28,15 +30,21 @@ const state = (set) => ({
             }
         })
     },
+    isDismissedRecommendation(id) {
+        return get().dismissedRecommendations.some((rec) => rec.id === id)
+    },
+    dismissRecommendation(id) {
+        if (get().isDismissedRecommendation(id)) return
+        const rec = { id, dismissedAt: new Date().toISOString() }
+        set((state) => ({
+            dismissedRecommendations: [...state.dismissedRecommendations, rec],
+        }))
+    },
 })
 
 const storage = {
     getItem: async () => JSON.stringify(await getRecommendationData()),
-    setItem: async (k, value) => {
-        // Stash here so we can use it on reload optimistically
-        await saveRecommendationData(value)
-        localStorage.setItem(k, value)
-    },
+    setItem: async (_, value) => await saveRecommendationData(value),
     removeItem: () => undefined,
 }
 
@@ -44,6 +52,6 @@ export const useRecommendationsStore = create(
     persist(state, {
         name: key,
         storage: createJSONStorage(() => storage),
+        skipHydration: true,
     }),
-    state,
 )

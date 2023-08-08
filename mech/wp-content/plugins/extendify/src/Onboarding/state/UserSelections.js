@@ -18,7 +18,7 @@ const initialState = {
     goals: [],
     ...(JSON.parse(localStorage.getItem(key) || '{}')?.state ?? {}),
 }
-console.log('initialState', initialState)
+
 const state = (set, get) => ({
     ...initialState,
     setSiteType(siteType) {

@@ -13,8 +13,9 @@ const startingState = {
     activeCategory: null,
     searchTerm: null,
     offset: 0,
-    // Optimistically update from local storage - see storage.setItem below
-    ...(JSON.parse(localStorage.getItem(key) || '{}')?.state ?? {}),
+    // initialize the state with default values
+    ...((window.extAssistData.userData.supportArticlesData?.data || {})
+        ?.state ?? {}),
 }
 
 const state = (set) => ({
@@ -79,13 +80,10 @@ const state = (set) => ({
         set({ offset })
     },
 })
+
 const storage = {
     getItem: async () => JSON.stringify(await getSupportArticlesData()),
-    setItem: async (k, value) => {
-        // Stash here so we can use it on reload optimistically
-        await saveSupportArticlesData(value)
-        localStorage.setItem(k, value)
-    },
+    setItem: async (_, value) => await saveSupportArticlesData(value),
     removeItem: () => undefined,
 }
 
@@ -93,6 +91,7 @@ export const useKnowledgeBaseStore = create(
     persist(devtools(state, { name: 'Extendify Assist Knowledge Base' }), {
         name: key,
         storage: createJSONStorage(() => storage),
+        skipHydration: true,
         partialize: (state) => {
             delete state.articles
             delete state.activeCategory
@@ -101,5 +100,4 @@ export const useKnowledgeBaseStore = create(
             return state
         },
     }),
-    state,
 )

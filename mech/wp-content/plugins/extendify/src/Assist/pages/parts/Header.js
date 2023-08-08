@@ -28,7 +28,8 @@ export const Header = () => {
                         </div>
                     )}
                     {!window.extAssistData?.partnerLogo && (
-                        <a href="/wp-admin/admin.php?page=extendify-assist">
+                        <a
+                            href={`${window.extAssistData.adminUrl}admin.php?page=extendify-assist`}>
                             <Logo className="logo text-design-text w-32 sm:w-40" />
                         </a>
                     )}

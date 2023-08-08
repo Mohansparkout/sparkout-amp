@@ -1,12 +1,10 @@
-import { Spinner } from '@wordpress/components'
 import { __, sprintf } from '@wordpress/i18n'
 import { TourItem } from '@assist/components/task-items/TourItem'
-import { useTours } from '@assist/hooks/useTours'
 import { useTourStore } from '@assist/state/Tours'
 import tours from '@assist/tours/tours'
 
 export const ToursList = () => {
-    const { tours: tourData, loading, error } = useTours()
+    const tourData = window.extAssistData.resourceData.tours
     const { wasOpened } = useTourStore()
 
     // Now filter all tasks that are marked as completed
@@ -16,14 +14,6 @@ export const ToursList = () => {
     const activeTours = tourData?.filter(
         (tour) => tours[tour.slug]?.settings?.enabled ?? true,
     )
-
-    if (loading || error) {
-        return (
-            <div className="my-4 w-full flex justify-center bg-white border border-gray-300 p-4 lg:p-8 rounded">
-                <Spinner />
-            </div>
-        )
-    }
 
     if (activeTours?.length === 0) {
         return (

@@ -1,7 +1,7 @@
-import { Panel, PanelBody } from '@wordpress/components'
+import { BaseControl, Panel, PanelBody } from '@wordpress/components'
+import { useSelect } from '@wordpress/data'
 import { useEffect, useState } from '@wordpress/element'
 import { __ } from '@wordpress/i18n'
-import { Actions } from '@draft/components/Actions'
 import { Completion } from '@draft/components/Completion'
 import { DraftMenu } from '@draft/components/DraftMenu'
 import { EditMenu } from '@draft/components/EditMenu'
@@ -12,21 +12,47 @@ import { useCompletion } from '@draft/hooks/useCompletion'
 export const Draft = () => {
     const [inputText, setInputText] = useState('')
     const [ready, setReady] = useState(false)
-    const [prompt, setPrompt] = useState('')
-    const { completion, loading, error } = useCompletion(prompt)
+    const [prompt, setPrompt] = useState({
+        text: '',
+        promptType: '',
+        systemMessageKey: '',
+    })
+    const { completion, loading, error } = useCompletion(
+        prompt.text,
+        prompt.promptType,
+        prompt.systemMessageKey,
+    )
+    const selectedBlockClientIds = useSelect(
+        (select) => select('core/block-editor').getSelectedBlockClientIds(),
+        [],
+    )
+    const { getBlock } = useSelect((select) => select('core/block-editor'), [])
 
     // Reset input text when an error occurs
     useEffect(() => {
-        if (error) {
-            setInputText(prompt)
+        if (!error) return
+        setInputText(prompt.text)
+    }, [error, prompt.text])
+
+    const canEditContent = () => {
+        if (selectedBlockClientIds.length === 0) {
+            return false
         }
-    }, [error, prompt])
+        const targetBlock = getBlock(selectedBlockClientIds[0])
+        if (!targetBlock) {
+            return false
+        }
+        return (
+            typeof targetBlock?.attributes?.content !== 'undefined' &&
+            targetBlock?.attributes?.content !== ''
+        )
+    }
 
     return (
         <>
             <Panel>
                 <PanelBody>
-                    <div className="rounded-sm border-none bg-gray-100 overflow-hidden">
+                    <div className="rounded-sm border-none bg-gray-100 overflow-hidden mb-4">
                         <Input
                             inputText={inputText}
                             setInputText={setInputText}
@@ -41,53 +67,53 @@ export const Draft = () => {
                                 <Completion completion={completion} />
                             </>
                         )}
-                        {(completion || error) && (
-                            <div className="px-4 mb-4 mt-2 flex gap-4 items-center justify-end">
-                                {error && (
-                                    <p className="m-0 mr-auto text-xs font-semibold text-red-500 justify-self-start">
-                                        {error.message}
-                                    </p>
-                                )}
-                                <Actions
-                                    loading={loading}
-                                    error={error}
-                                    prompt={prompt}
-                                    setPrompt={setPrompt}
-                                    setInputText={setInputText}
-                                />
+                        {error && (
+                            <div className="px-4 mb-4 mt-2">
+                                <p className="m-0 text-xs font-semibold text-red-500">
+                                    {error.message}
+                                </p>
                             </div>
                         )}
                     </div>
-                    {completion && !loading && !error && (
+                    {(completion || loading) && !error && (
                         <InsertMenu
+                            prompt={prompt}
                             completion={completion}
                             setPrompt={setPrompt}
+                            setInputText={setInputText}
+                            loading={loading}
                         />
                     )}
-                </PanelBody>
-                {completion && (
-                    <PanelBody title={__('Edit or review', 'extendify')}>
-                        <EditMenu
-                            completion={completion}
-                            disabled={loading}
-                            setInputText={setInputText}
-                            setPrompt={setPrompt}
-                        />
-                    </PanelBody>
-                )}
-                <PanelBody title={__('Draft with AI', 'extendify')}>
-                    <DraftMenu
-                        disabled={loading}
-                        setInputText={setInputText}
-                        setReady={setReady}
-                    />
+                    {!loading && !completion && canEditContent() && (
+                        <BaseControl label={__('Edit or review', 'extendify')}>
+                            <EditMenu
+                                completion={completion}
+                                disabled={loading}
+                                setInputText={setInputText}
+                                setPrompt={setPrompt}
+                            />
+                        </BaseControl>
+                    )}
+                    {!loading && !completion && !canEditContent() && (
+                        <BaseControl label={__('Draft with AI', 'extendify')}>
+                            <DraftMenu
+                                disabled={loading}
+                                setInputText={setInputText}
+                                setReady={setReady}
+                            />
+                        </BaseControl>
+                    )}
                 </PanelBody>
             </Panel>
             {window.extendifyData?.devbuild && (
                 <Panel>
                     <PanelBody title="Debug" initialOpen={false}>
-                        <label>prompt:</label>
-                        <pre className="whitespace-pre-wrap">{prompt}</pre>
+                        <label>prompt text:</label>
+                        <pre className="whitespace-pre-wrap">{prompt.text}</pre>
+                        <label>prompt system message:</label>
+                        <pre className="whitespace-pre-wrap">
+                            {prompt.systemMessageKey}
+                        </pre>
                         <label>completion:</label>
                         <pre className="whitespace-pre-wrap">{completion}</pre>
                         <label>error:</label>

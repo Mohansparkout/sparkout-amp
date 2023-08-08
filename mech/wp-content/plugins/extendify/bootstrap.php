@@ -47,6 +47,7 @@ new DraftAdmin();
 new AdminPageRouter();
 new Translations();
 
+
 require EXTENDIFY_PATH . 'routes/api.php';
 require EXTENDIFY_PATH . 'editorplus/EditorPlus.php';
 

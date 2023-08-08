@@ -1,15 +1,13 @@
-import { Spinner } from '@wordpress/components'
 import { useEffect, useState } from '@wordpress/element'
 import { __, sprintf } from '@wordpress/i18n'
 import { motion, AnimatePresence } from 'framer-motion'
 import { TaskItem } from '@assist/components/task-items/TaskItem'
-import { useTasks } from '@assist/hooks/useTasks'
 import { useTasksStore } from '@assist/state/Tasks'
 import { Confetti } from '@assist/svg'
 
 export const TasksList = () => {
     const { seeTask, isCompleted } = useTasksStore()
-    const { tasks, loading, error } = useTasks()
+    const tasks = window.extAssistData.resourceData.tasks
     const [showCompleted, setShowCompleted] = useState(false)
 
     // Now filter all tasks that are marked as completed
@@ -26,14 +24,6 @@ export const TasksList = () => {
         // Mark all tasks as seen. If always seen they will not update.
         tasks.forEach((task) => seeTask(task.slug))
     }, [tasks, seeTask])
-
-    if (loading || error) {
-        return (
-            <div className="my-4 w-full flex justify-center bg-white border border-gray-300 p-4 lg:p-8 rounded">
-                <Spinner />
-            </div>
-        )
-    }
 
     if (tasks?.length === 0 || tasks?.length === 0) {
         return (

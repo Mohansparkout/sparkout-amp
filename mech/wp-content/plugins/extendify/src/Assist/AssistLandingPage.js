@@ -4,7 +4,6 @@ import { addAction, removeAction } from '@wordpress/hooks'
 import { getPlugins } from '@wordpress/plugins'
 import { SWRConfig } from 'swr'
 import { useRouter } from '@assist/hooks/useRouter'
-import { storageProvider as provider } from '@assist/lib/localStorageProvider'
 import { Header } from '@assist/pages/parts/Header'
 import './documentation.css'
 
@@ -36,12 +35,6 @@ const Page = () => {
 export const AssistLandingPage = () => (
     <SWRConfig
         value={{
-            provider,
-            onError: () => {
-                localStorage.removeItem(
-                    `${window.extAssistData.wpLanguage}-assist-cache`,
-                )
-            },
             onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
                 if (error.status === 404) return
                 if (error?.data?.status === 403) {

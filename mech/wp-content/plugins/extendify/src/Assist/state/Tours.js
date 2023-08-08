@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { devtools, persist, createJSONStorage } from 'zustand/middleware'
-import { getTourData, saveTourData } from '../api/Data'
+import { getTourData, saveTourData } from '@assist/api/Data'
 
 const key = 'extendify-assist-tour-progress'
 const startingState = {
@@ -8,8 +8,8 @@ const startingState = {
     currentStep: undefined,
     preparingStep: undefined,
     progress: [],
-    // Optimistically update from local storage - see storage.setItem below
-    ...(JSON.parse(localStorage.getItem(key) || '{}')?.state ?? {}),
+    // initialize the state with default values
+    ...((window.extAssistData.userData.tourData?.data || {})?.state ?? {}),
 }
 
 const state = (set, get) => ({
@@ -204,11 +204,7 @@ const state = (set, get) => ({
 
 const storage = {
     getItem: async () => JSON.stringify(await getTourData()),
-    setItem: async (k, value) => {
-        // Stash here so we can use it on reload optimistically
-        await saveTourData(value)
-        localStorage.setItem(k, value)
-    },
+    setItem: async (_, value) => await saveTourData(value),
     removeItem: () => undefined,
 }
 
@@ -216,6 +212,7 @@ export const useTourStore = create(
     persist(devtools(state, { name: 'Extendify Assist Tour Progress' }), {
         name: key,
         storage: createJSONStorage(() => storage),
+        skipHydration: true,
         partialize: (state) => {
             // return without currentTour or currentStep
             // eslint-disable-next-line no-unused-vars
@@ -224,5 +221,4 @@ export const useTourStore = create(
             return newState
         },
     }),
-    state,
 )

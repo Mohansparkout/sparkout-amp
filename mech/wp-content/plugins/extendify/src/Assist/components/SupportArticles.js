@@ -8,11 +8,7 @@ import { SearchForm } from '@assist/components/support-articles/SearchForm'
 import { SearchResults } from '@assist/components/support-articles/SearchResults'
 import { SupportArticle } from '@assist/components/support-articles/SupportArticle'
 import { router } from '@assist/hooks/useRouter'
-import {
-    useSupportArticles,
-    useSupportArticleCategories,
-    useSearchArticles,
-} from '@assist/hooks/useSupportArticles'
+import { useSearchArticles } from '@assist/hooks/useSupportArticles'
 import { useKnowledgeBaseStore } from '@assist/state/KnowledgeBase'
 import { arrowTurnRight } from '@assist/svg'
 
@@ -84,19 +80,13 @@ const ContentToShow = ({ articles, search, searchResponse }) => {
 const ArticlesList = () => {
     const { activeCategory, setActiveCategory, pushArticle } =
         useKnowledgeBaseStore()
-    const { data: categories, error: catError } = useSupportArticleCategories()
-    const { data: articlesList, loading, error } = useSupportArticles()
+    const categories =
+        window.extAssistData.resourceData.supportArticleCategories
+    const articlesList = window.extAssistData.resourceData.supportArticles
+
     const userLanguage = window.extAssistData.wpLanguage || 'en'
 
-    if (error || catError) {
-        return (
-            <div className="p-8 text-base text-center">
-                {__('There was an error loading articles', 'extendify')}
-            </div>
-        )
-    }
-
-    if (loading || !categories) {
+    if (!categories) {
         return (
             <div className="p-8 text-base text-center">
                 <Spinner />

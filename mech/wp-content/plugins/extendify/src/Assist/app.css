@@ -20,6 +20,9 @@
     content: none;
 }
 
+.extendify-assist-upload-logo .components-responsive-wrapper {
+    @apply w-full;
+}
 .extendify-assist-upload-logo .components-responsive-wrapper > span {
     display: block;
     padding-bottom: 192px !important;

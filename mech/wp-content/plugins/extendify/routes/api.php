@@ -18,7 +18,6 @@ use Extendify\Library\Controllers\TemplateController;
 use Extendify\Library\Controllers\UserController;
 
 use Extendify\Onboarding\Controllers\DataController;
-use Extendify\Onboarding\Controllers\LibraryController;
 use Extendify\Onboarding\Controllers\WPController;
 use Extendify\Onboarding\Controllers\UserSelectionController;
 
@@ -35,7 +34,6 @@ use Extendify\Assist\Controllers\SupportArticlesController;
 use Extendify\Assist\Controllers\RecommendationsBannerController;
 
 use Extendify\Chat\Controllers\ChatController;
-use Extendify\Draft\Controllers\DraftController;
 
 \add_action(
     'rest_api_init',
@@ -81,6 +79,7 @@ use Extendify\Draft\Controllers\DraftController;
         ApiRouter::get('/onboarding/ping', [DataController::class, 'ping']);
         ApiRouter::get('/onboarding/user-selection-data', [UserSelectionController::class, 'get']);
         ApiRouter::post('/onboarding/user-selection-data', [UserSelectionController::class, 'store']);
+        ApiRouter::get('/onboarding/prefetch-assist-data', [WPController::class, 'prefetchAssistData']);
 
         // Assist.
         ApiRouter::post('/assist/options', [AssistWPController::class, 'updateOption']);
@@ -117,8 +116,5 @@ use Extendify\Draft\Controllers\DraftController;
         ApiRouter::get('/chat/options/', [ChatController::class, 'getOptions']);
         ApiRouter::post('/chat/options/', [ChatController::class, 'updateOptions']);
         ApiRouter::post('/chat/rate-answer', [ChatController::class, 'rateAnswer']);
-
-        // TODO: consider merging this route into the library.
-        ApiRouter::post('/library/site-type', [LibraryController::class, 'updateSiteType']);
     }
 );

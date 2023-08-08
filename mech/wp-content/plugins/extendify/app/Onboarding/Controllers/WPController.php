@@ -74,4 +74,19 @@ class WPController
             'data' => \get_option('active_plugins', null),
         ]);
     }
+
+    /**
+     * This function will force the regenerating of the cache.
+     *
+     * @return \WP_REST_Response
+     */
+    public static function prefetchAssistData()
+    {
+        if (class_exists(\Extendify\Assist\DataProvider\ResourceData::class)) {
+            (new \Extendify\Assist\DataProvider\ResourceData())->cache();
+        }
+
+        return new \WP_REST_Response(true, 200);
+    }
+
 }

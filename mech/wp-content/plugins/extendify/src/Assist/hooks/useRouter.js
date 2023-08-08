@@ -103,9 +103,9 @@ const useRouterState = create(
     persist(devtools(state, { name: 'Extendify Assist Router' }), {
         name: 'extendify-assist-router',
         storage: createJSONStorage(() => storage),
+        skipHydration: true,
         partialize: ({ viewedPages }) => ({ viewedPages }),
     }),
-    state,
 )
 export const router = {
     onRouteChange: (event) => {

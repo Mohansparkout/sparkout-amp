@@ -21,3 +21,12 @@ Use it to make something cool, have fun, and share what you've learned with othe
 .primary-menu > li.current_page_item > a:after, .primary-menu > li.current-menu-item > a:after {
     background:#FFB716 !important;
 }				
+.counter-home-list.wpb_column.vc_column_container.vc_col-sm-12 {
+    text-align:center !important;
+}
+ul.footer-list-section li {
+    margin-bottom: 7px;
+}
+.vc_toggle_title>h4 {
+font-size:18px !important;
+}

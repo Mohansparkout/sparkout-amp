@@ -1,7 +1,6 @@
 import { rawHandler } from '@wordpress/blocks'
 import { render } from '@wordpress/element'
 import ExtendifyLibrary from '@library/ExtendifyLibrary'
-import '@library/blocks/blocks'
 import '@library/buttons'
 import '@library/listeners'
 import { useWantedTemplateStore } from '@library/state/Importing'

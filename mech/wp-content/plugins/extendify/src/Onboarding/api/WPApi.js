@@ -121,3 +121,6 @@ export const addLaunchPagesToNav = (
 }
 
 export const getActivePlugins = () => api.get('onboarding/active-plugins')
+
+export const prefetchAssistData = async () =>
+    await api.get('onboarding/prefetch-assist-data')

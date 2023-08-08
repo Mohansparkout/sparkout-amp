@@ -194,7 +194,7 @@ export const StylePreview = ({
             const doc = iFrame.contentDocument
             const style = `<style id="ext-tj">${transformedStyles}</style>`
             if (!doc?.getElementById('ext-tj')) {
-                doc?.head?.insertAdjacentHTML('beforeend', style)
+                doc?.body?.insertAdjacentHTML('beforeend', style)
             }
             timer2 = setTimeout(() => isMounted.current && setLoaded(true), 100)
             clearTimeout(timer)
