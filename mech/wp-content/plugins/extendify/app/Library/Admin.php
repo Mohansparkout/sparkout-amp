@@ -7,7 +7,6 @@ namespace Extendify\Library;
 
 use Extendify\Config;
 use Extendify\User;
-use Extendify\Library\SiteSettings;
 
 /**
  * This class handles any file loading for the admin area.
@@ -43,14 +42,9 @@ class Admin
                     return;
                 }
 
-                $siteSettings = json_decode(get_option('extendifysdk_sitesettings', '{"state":{}}'));
+                $siteSettings = json_decode(get_option('extendifysdk_sitesettings', '{ "state": {} }'));
                 if (!isset($siteSettings->state->activateLegacyClasses) || $siteSettings->state->activateLegacyClasses === false) {
-                    if ($siteSettings === null) {
-                        $siteSettings = json_decode('{"state":{"enabled":true,"activateLegacyClasses":true}}');
-                    } else {
-                        $siteSettings->state->activateLegacyClasses = true;
-                    }
-
+                    $siteSettings->state->activateLegacyClasses = true;
                     update_option('extendifysdk_sitesettings', wp_json_encode($siteSettings));
                 }
 
@@ -286,19 +280,13 @@ class Admin
     }
 
     /**
-     * Check if scripts should add
+     * Check if scripts should add based on user setting.
      *
      * @return Boolean
      */
     public function isLibraryEnabled()
     {
-        $settings = json_decode(SiteSettings::data());
-
-        // If it's disabled, only show it for admins.
-        if (isset($settings->state) && (isset($settings->state->enabled)) && !$settings->state->enabled) {
-            return $this->isAdmin();
-        }
-
+        // TODO: For now just always show.
         return true;
     }
 

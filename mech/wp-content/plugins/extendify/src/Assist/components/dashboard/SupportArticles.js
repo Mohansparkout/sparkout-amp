@@ -23,7 +23,7 @@ export const SupportArticles = () => {
             id="assist-knowledge-base-module"
             className="w-full bg-white p-4 lg:p-8 text-base">
             <div className="flex justify-between items-center gap-2">
-                <h3 className="text-lg leading-tight m-0">
+                <h3 className="text-lg leading-tight m-0 flex-1">
                     {userLanguage.startsWith('en')
                         ? __('Knowledge Base', 'extendify')
                         : __('Knowledge Base (English only)', 'extendify')}

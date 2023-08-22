@@ -171,5 +171,7 @@ class Admin
             $draftDependencies['version'],
             true
         );
+
+        \wp_set_script_translations(Config::$slug . '-draft-scripts', 'extendify');
     }
 }

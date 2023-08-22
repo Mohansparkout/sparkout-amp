@@ -17,7 +17,7 @@ $text_style = TNP_Composer::get_style($options, '', $composer, 'text');
     }
     .excerpt {
         <?php $text_style->echo_css() ?>
-        line-height: 1.5em !important;
+        line-height: 1.5 !important;
         text-decoration: none;
     }
 

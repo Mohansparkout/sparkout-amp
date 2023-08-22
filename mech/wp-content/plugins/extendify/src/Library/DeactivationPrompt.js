@@ -73,8 +73,14 @@ export default function DeactivationPrompt() {
 
                         <div className="flex justify-end gap-4">
                             <Button
+                                className="components-button is-secondary"
+                                onClick={closeAndDeactivate}
+                                showTooltip={false}>
+                                {__('Deactivate only', 'extendify')}
+                            </Button>
+                            <Button
                                 ref={initialFocusRef}
-                                className="components-button bg-design-main text-design-text is-primary"
+                                className="components-button is-primary"
                                 onClick={() => {
                                     SiteSettings.addUtilsToGlobalStyles().finally(
                                         closeAndDeactivate,
@@ -82,12 +88,6 @@ export default function DeactivationPrompt() {
                                 }}
                                 showTooltip={false}>
                                 {__('Yes, add styles', 'extendify')}
-                            </Button>
-                            <Button
-                                className="components-button bg-design-main text-design-text is-primary"
-                                onClick={closeAndDeactivate}
-                                showTooltip={false}>
-                                {__('Deactivate only', 'extendify')}
                             </Button>
                         </div>
                     </div>

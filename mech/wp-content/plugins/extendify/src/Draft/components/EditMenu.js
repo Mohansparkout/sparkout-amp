@@ -56,9 +56,11 @@ export const EditMenu = ({ disabled, setPrompt }) => {
                 className="group">
                 <Icon
                     icon={wand}
-                    className="group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
+                    className="flex-shrink-0 group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
                 />
-                {__('Improve writing', 'extendify')}
+                <span className="whitespace-normal text-left">
+                    {__('Improve writing', 'extendify')}
+                </span>
             </MenuItem>
             <MenuItem
                 onClick={() => handleClick('fix-spelling-grammar')}
@@ -76,9 +78,11 @@ export const EditMenu = ({ disabled, setPrompt }) => {
                 className="group">
                 <Icon
                     icon={check}
-                    className="group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
+                    className="flex-shrink-0 group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
                 />
-                {__('Fix spelling & grammar', 'extendify')}
+                <span className="whitespace-normal text-left">
+                    {__('Fix spelling & grammar', 'extendify')}
+                </span>
             </MenuItem>
             <MenuItem
                 onClick={() => handleClick('make-shorter')}
@@ -96,9 +100,11 @@ export const EditMenu = ({ disabled, setPrompt }) => {
                 className="group">
                 <Icon
                     icon={shorter}
-                    className="group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
+                    className="flex-shrink-0 group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
                 />
-                {__('Make shorter', 'extendify')}
+                <span className="whitespace-normal text-left">
+                    {__('Make shorter', 'extendify')}
+                </span>
             </MenuItem>
             <MenuItem
                 onClick={() => handleClick('make-longer')}
@@ -116,9 +122,11 @@ export const EditMenu = ({ disabled, setPrompt }) => {
                 className="group">
                 <Icon
                     icon={longer}
-                    className="group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
+                    className="flex-shrink-0 group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
                 />
-                {__('Make longer', 'extendify')}
+                <span className="whitespace-normal text-left">
+                    {__('Make longer', 'extendify')}
+                </span>
             </MenuItem>
             <MenuItem
                 onClick={() => handleClick('simplify-language')}
@@ -136,9 +144,11 @@ export const EditMenu = ({ disabled, setPrompt }) => {
                 className="group">
                 <Icon
                     icon={magic}
-                    className="group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
+                    className="flex-shrink-0 group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
                 />
-                {__('Simplify language', 'extendify')}
+                <span className="whitespace-normal text-left">
+                    {__('Simplify language', 'extendify')}
+                </span>
             </MenuItem>
         </MenuGroup>
     )

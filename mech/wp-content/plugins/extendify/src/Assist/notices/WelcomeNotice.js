@@ -49,8 +49,8 @@ export const WelcomeNotice = () => {
                 </button>
             </div>
 
-            <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
-                <div className="xl:max-w-lg col-span-8">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
+                <div className="flex-1">
                     <h3 className="text-2xl mt-0 mb-3 text-white">
                         {__('Your site is ready!', 'extendify')}
                     </h3>
@@ -61,17 +61,15 @@ export const WelcomeNotice = () => {
                         )}
                     </p>
                 </div>
-                <div className="xl:max-w-lg col-span-4 flex sm:items-start lg:items-center lg:justify-evenly h-full">
-                    <button
-                        className="h-12 bg-white border-none cursor-pointer gap-3 grid grid-flow-col items-center no-underline px-5 py-3 rounded-sm text-design-main text-base hover:bg-gray-200 focus:shadow-button"
-                        onClick={() => {
-                            startTour(siteAssistantTour)
-                        }}>
-                        {__('Take a tour', 'extendify')}
+                <button
+                    className="h-12 bg-white border-none cursor-pointer gap-3 grid grid-flow-col items-center no-underline px-5 py-3 rounded-sm text-design-main text-base hover:bg-gray-200 focus:shadow-button"
+                    onClick={() => {
+                        startTour(siteAssistantTour)
+                    }}>
+                    {__('Take a tour', 'extendify')}
 
-                        <ToursPlay className="w-5 h-5 group-hover:fill-current fill-current" />
-                    </button>
-                </div>
+                    <ToursPlay className="w-5 h-5 group-hover:fill-current fill-current" />
+                </button>
             </div>
         </div>
     )

@@ -28,7 +28,7 @@ export const Recommendations = () => {
             id="assist-recommendations-module"
             className="w-full border border-gray-300 text-base bg-white p-4 md:p-8 rounded">
             <div className="flex justify-between items-center gap-2">
-                <h2 className="text-lg leading-tight m-0 flex items-center gap-1">
+                <h2 className="text-lg leading-tight m-0 flex flex-1 items-center gap-1">
                     <span>{__('Recommendations', 'extendify')}</span>
                 </h2>
                 <a

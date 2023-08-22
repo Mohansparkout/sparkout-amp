@@ -141,16 +141,26 @@ export const InsertMenu = ({
                     })
                 }
                 disabled={loading || canReplaceContent()}>
-                <Icon icon={replace} className="fill-current w-5 h-5 mr-2" />
-                {__('Replace selected block text', 'extendify')}
+                <Icon
+                    icon={replace}
+                    className="flex-shrink-0 fill-current w-5 h-5 mr-2"
+                />
+                <span className="whitespace-normal text-left">
+                    {__('Replace selected block text', 'extendify')}
+                </span>
             </MenuItem>
             <MenuItem
                 onClick={() => insertCompletion({ replaceContent: false })}
                 onMouseEnter={() => toggleInsertionPoint(true)}
                 onMouseLeave={() => toggleInsertionPoint(false)}
                 disabled={loading}>
-                <Icon icon={below} className="fill-current w-5 h-5 mr-2" />
-                {__('Insert below', 'extendify')}
+                <Icon
+                    icon={below}
+                    className="flex-shrink-0 fill-current w-5 h-5 mr-2"
+                />
+                <span className="whitespace-normal text-left">
+                    {__('Insert below', 'extendify')}
+                </span>
             </MenuItem>
             <MenuItem
                 onClick={() => handleEdit('make-shorter')}
@@ -158,7 +168,7 @@ export const InsertMenu = ({
                 className="group">
                 <Icon
                     icon={shorter}
-                    className="group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
+                    className="flex-shrink-0 fill-current w-5 h-5 mr-2"
                 />
                 {__('Make shorter', 'extendify')}
             </MenuItem>
@@ -168,18 +178,30 @@ export const InsertMenu = ({
                 className="group">
                 <Icon
                     icon={longer}
-                    className="group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
+                    className="flex-shrink-0 fill-current w-5 h-5 mr-2"
                 />
-                {__('Make longer', 'extendify')}
+                <span className="whitespace-normal text-left">
+                    {__('Make longer', 'extendify')}
+                </span>
             </MenuItem>
             <Divider />
             <MenuItem onClick={retry} disabled={loading}>
-                <Icon icon={replay} className="fill-current w-5 h-5 mr-2" />
-                {__('Try again', 'extendify')}
+                <Icon
+                    icon={replay}
+                    className="flex-shrink-0 fill-current w-5 h-5 mr-2"
+                />
+                <span className="whitespace-normal text-left">
+                    {__('Try again', 'extendify')}
+                </span>
             </MenuItem>
             <MenuItem onClick={discard} disabled={loading}>
-                <Icon icon={trash} className="fill-current w-5 h-5 mr-2" />
-                {__('Discard', 'extendify')}
+                <Icon
+                    icon={trash}
+                    className="flex-shrink-0 fill-current w-5 h-5 mr-2"
+                />
+                <span className="whitespace-normal text-left">
+                    {__('Discard', 'extendify')}
+                </span>
             </MenuItem>
         </MenuGroup>
     )

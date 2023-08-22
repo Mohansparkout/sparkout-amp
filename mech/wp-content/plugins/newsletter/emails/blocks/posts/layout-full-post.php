@@ -19,7 +19,7 @@ $text_style = TNP_Composer::get_text_style($options, '', $composer);
 
     .p {
         <?php $text_style->echo_css() ?>
-        line-height: 1.5em!important;
+        line-height: 1.5 !important;
     }
     
     .li {

@@ -11,7 +11,7 @@ const storage = {
 export const useSiteSettingsStore = create(
     persist(
         (set) => ({
-            enabled: true,
+            // enabled: true, // removed
             siteType: {},
             activateLegacyClasses: false,
             setSiteType: async (siteType) => {

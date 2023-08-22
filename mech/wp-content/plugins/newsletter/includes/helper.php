@@ -301,8 +301,16 @@ function tnp_resize($media_id, $size) {
     if (empty($pathinfo['filename'])) {
         return _tnp_get_default_media($media_id, $size);
     }
+    
+    $file_ext  = strtolower($pathinfo['extension']);
+    $out_mimetype = null;
+    
+    if ($file_ext === 'webp') {
+        $file_ext = 'jpg';
+        $out_mimetype = 'image/jpeg';
+    }
 
-    $relative_thumb = $pathinfo['dirname'] . '/' . $pathinfo['filename'] . '-' . $width . 'x' . $height . ($crop ? '-c' : '') . '.' . $pathinfo['extension'];
+    $relative_thumb = $pathinfo['dirname'] . '/' . $pathinfo['filename'] . '-' . $width . 'x' . $height . ($crop ? '-c' : '') . '.' . $file_ext;
     $absolute_thumb = $uploads['basedir'] . '/newsletter/thumbnails/' . $relative_thumb;
 
     // Thumbnail generation if needed.
@@ -340,8 +348,8 @@ function tnp_resize($media_id, $size) {
             Newsletter::instance()->logger->error('File: ' . $absolute_file);
             return _tnp_get_default_media($media_id, $size);
         }
-
-        $saved = $editor->save($absolute_thumb);
+        
+        $saved = $editor->save($absolute_thumb, $out_mimetype);
         if (is_wp_error($saved)) {
             Newsletter::instance()->logger->error($saved);
             return _tnp_get_default_media($media_id, $size);

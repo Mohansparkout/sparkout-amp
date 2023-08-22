@@ -184,8 +184,12 @@ class NewsletterEmails extends NewsletterModule {
                 header('Content-Type: text/html;charset=UTF-8');
                 header('X-Robots-Tag: noindex,nofollow,noarchive');
                 header('Cache-Control: no-cache,no-store,private');
-
-                echo apply_filters('newsletter_view_message', $this->replace($email->message, $user, $email));
+                
+                $message = $this->replace($email->message, $user, $email);
+                if (Newsletter::instance()->get_option('do_shortcodes')) {
+                    $message = do_shortcode($message);
+                }
+                echo apply_filters('newsletter_view_message', $message);
 
                 die();
                 break;

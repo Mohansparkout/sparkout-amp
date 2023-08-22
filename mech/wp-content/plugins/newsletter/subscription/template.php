@@ -21,7 +21,7 @@ if (!$controls->is_action()) {
 
     if ($controls->is_action('test')) {
 
-        $users = $module->get_test_users();
+        $users = $this->get_test_users();
         if (count($users) == 0) {
             $controls->errors = __('No test subscribers found.', 'newsletter') . ' <a href="https://www.thenewsletterplugin.com/plugins/newsletter/subscribers-module#test" target="_blank"><i class="fas fa-info-circle"></i></a>';
         } else {
@@ -39,7 +39,7 @@ if (!$controls->is_action()) {
             $addresses = array();
             foreach ($users as $user) {
                 $addresses[] = $user->email;
-                Newsletter::instance()->mail($user->email, 'Newsletter Messages Template Test', $module->replace($message, $user));
+                Newsletter::instance()->mail($user->email, 'Newsletter Messages Template Test', $this->replace($message, $user));
             }
             $controls->messages .= 'Test emails sent to ' . count($users) . ' test subscribers: ' .
                     implode(', ', $addresses) . '.' . ' <a href="https://www.thenewsletterplugin.com/plugins/newsletter/subscribers-module#test" target="_blank"><i class="fas fa-info-circle"></i></a>';

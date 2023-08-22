@@ -1,7 +1,7 @@
 === Newsletter - Send awesome emails from WordPress ===
 Tags: newsletter, email marketing, welcome email, signup forms, lead generation, marketing automation
-Tested up to: 6.2.2
-Stable tag: 7.8.9
+Tested up to: 6.3
+Stable tag: 7.9.0
 Contributors: satollo,webagile,michael-travan
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -125,6 +125,18 @@ Thank you, The Newsletter Team
 3. The Reports extension
 
 == Changelog ==
+
+= 7.9.0 =
+
+* Fixed some line heights
+* Added registration of shortcodes under the AJAX context
+* Added shortcode management on newsletter online view
+* Fixed line-height for Outlook on some blocks
+* Fixed the template message test
+* Added webp images check since Outlook does not support that format
+* Fixed error text field on subscription panel not displaying when customized
+* Security fix on minimal form shortcode
+* Removed the "before" and "after" attributes of the main shortcode
 
 = 7.8.9 =
 

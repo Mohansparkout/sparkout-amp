@@ -61,14 +61,12 @@ $emails = $pagination_controller->get_items();
             <table class="widefat tnp-newsletters-list" style="width: 100%">
                 <thead>
                     <tr>
-                        <th><input type="checkbox" onchange="jQuery('input.tnp-selector').prop('checked', this.checked)"></th>
+                        <th style="text-align: center"><input type="checkbox" onchange="jQuery('input.tnp-selector').prop('checked', this.checked)"></th>
                         <th>Id</th>
                         <th><?php _e('Subject', 'newsletter') ?></th>
                         <th><?php _e('Status', 'newsletter') ?></th>
                         <th><?php _e('Progress', 'newsletter') ?>&nbsp;(*)</th>
                         <th><?php _e('Date', 'newsletter') ?></th>
-                        <th>&nbsp;</th>
-                        <th>&nbsp;</th>
                         <th>&nbsp;</th>
                         <th>&nbsp;</th>
                         <th>&nbsp;</th>
@@ -78,7 +76,7 @@ $emails = $pagination_controller->get_items();
                 <tbody>
                     <?php foreach ($emails as $email) { ?>
                         <tr>
-                            <td>
+                            <td style="text-align: center">
                                 <input type="checkbox" class="tnp-selector" name="ids[]" value="<?php echo $email->id; ?>">
                             </td>
                             <td>

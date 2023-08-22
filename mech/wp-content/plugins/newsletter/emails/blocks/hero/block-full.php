@@ -12,7 +12,7 @@
 
             padding: 0 0 20px 0;
 
-        line-height: 1.5em;
+        line-height: 1.5;
         margin: 0;
     }
 

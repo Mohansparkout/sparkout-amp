@@ -21,8 +21,8 @@ export const DynamicTextarea = ({
     // This is a workaround for scrollHeight not reducing when text is deleted.
     useLayoutEffect(() => {
         const tempTextarea = document.createElement('textarea')
-        tempTextarea.value = value
-        tempTextarea.rows = 1 // Set rows to 1
+        tempTextarea.value = value || placeholder
+        tempTextarea.rows = 1 // Start at 1
 
         const styleProps = [
             'paddingTop',
@@ -48,7 +48,7 @@ export const DynamicTextarea = ({
         document.body.appendChild(tempTextarea)
         setHeight(`${tempTextarea.scrollHeight}px`)
         document.body.removeChild(tempTextarea)
-    }, [value])
+    }, [value, placeholder])
 
     // Focus the input.
     useEffect(() => {

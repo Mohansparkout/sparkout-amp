@@ -11,7 +11,7 @@ $items = [];
 <style>
     .title {
         <?php $title_style->echo_css()?>
-        line-height: 1.3em;
+        line-height: 1.3;
         padding: 15px 0 0 0;
     }
 

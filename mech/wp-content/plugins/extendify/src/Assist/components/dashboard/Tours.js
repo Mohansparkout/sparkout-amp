@@ -28,7 +28,7 @@ export const Tours = () => {
         <div
             id="assist-tours-module"
             className="w-full bg-white p-4 lg:p-8 text-base">
-            <div className="flex justify-between items-center gap-2">
+            <div className="flex flex-1 justify-between items-center gap-2">
                 <h3 className="text-lg leading-tight m-0">
                     {__('Tours', 'extendify')}
                 </h3>

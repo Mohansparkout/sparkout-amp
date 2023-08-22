@@ -206,6 +206,8 @@ class Admin
             true
         );
 
+        \wp_set_script_translations(Config::$slug . '-chat-scripts', 'extendify');
+
         $chatOptions = $this->getOptions();
 
         \wp_add_inline_script(

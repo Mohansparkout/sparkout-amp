@@ -1,6 +1,5 @@
 import { dispatch } from '@wordpress/data'
 import { __ } from '@wordpress/i18n'
-import { SiteSettings } from '@library/api/SiteSettings'
 import { Templates } from '@library/api/Templates'
 import { useUserStore } from '@library/state/User'
 
@@ -9,7 +8,6 @@ export const templateHandler = {
     register() {
         const { createNotice } = dispatch('core/notices')
         const increaseImports = useUserStore.getState().incrementImports
-        SiteSettings.updateOption('extendify_pattern_was_imported', 'library')
         window.addEventListener('extendify::template-inserted', (event) => {
             createNotice('info', __('Page layout added', 'extendify'), {
                 isDismissible: true,

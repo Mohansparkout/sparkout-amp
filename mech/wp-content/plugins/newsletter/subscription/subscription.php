@@ -31,23 +31,12 @@ class NewsletterSubscription extends NewsletterModule {
 
     function hook_init() {
         add_action('newsletter_action', array($this, 'hook_newsletter_action'), 10, 3);
-        if (!is_admin()) {
+        if (!is_admin() || defined('DOING_AJAX') && DOING_AJAX) {
             // Shortcode for the Newsletter page
             add_shortcode('newsletter', array($this, 'shortcode_newsletter'));
             add_shortcode('newsletter_form', array($this, 'shortcode_newsletter_form'));
             add_shortcode('newsletter_field', array($this, 'shortcode_newsletter_field'));
         }
-    }
-    
-    function get_options($set = '', $language = null) {
-        // This is a patch for addon using the "profile" set which originally contained the
-        // form options. This patch can create a problem if someone calls this method to get the actual
-        // "profile" set which is the configuration of the profile page.
-        // The correct call would be NewsletterProfile::instance()->get_options().
-        if ($set === 'profile') {
-            $set = 'form';
-        }
-        return parent::get_options($set, $language);
     }
 
     /**
@@ -193,6 +182,17 @@ class NewsletterSubscription extends NewsletterModule {
                 return;
         }
     }
+    
+    function get_options($set = '', $language = null) {
+        // This is a patch for addon using the "profile" set which originally contained the
+        // form options. This patch can create a problem if someone calls this method to get the actual
+        // "profile" set which is the configuration of the profile page.
+        // The correct call would be NewsletterProfile::instance()->get_options().
+        if ($set === 'profile') {
+            $set = 'form';
+        }
+        return parent::get_options($set, $language);
+    }    
 
     function get_form_options() {
         return $this->get_options('form');
@@ -1504,14 +1504,11 @@ class NewsletterSubscription extends NewsletterModule {
             $action = $this->build_action_url('s');
         }
 
-        if (isset($attrs['before'])) {
-            $buffer .= $attrs['before'];
+
+        if (isset($attrs['class'])) {
+            $buffer .= '<div class="tnp tnp-subscription ' . esc_attr($attrs['class']) . '">' . "\n";
         } else {
-            if (isset($attrs['class'])) {
-                $buffer .= '<div class="tnp tnp-subscription ' . $attrs['class'] . '">' . "\n";
-            } else {
-                $buffer .= '<div class="tnp tnp-subscription">' . "\n";
-            }
+            $buffer .= '<div class="tnp tnp-subscription">' . "\n";
         }
 
         $buffer .= '<form method="post" action="' . esc_attr($action) . '"';
@@ -1567,16 +1564,11 @@ class NewsletterSubscription extends NewsletterModule {
             $button_style = 'style="background-color:' . esc_attr($attrs['button_color']) . '"';
         }
 
-
         $buffer .= '<input class="tnp-submit" type="submit" value="' . esc_attr($this->get_form_text('subscribe')) . '" ' . $button_style . '>' . "\n";
 
         $buffer .= "</div>\n</form>\n";
 
-        if (isset($attrs['after'])) {
-            $buffer .= $attrs['after'];
-        } else {
-            $buffer .= "</div>\n";
-        }
+        $buffer .= "</div>\n";
 
         return $buffer;
     }
@@ -1591,7 +1583,7 @@ class NewsletterSubscription extends NewsletterModule {
         $action = $this->build_action_url('s');
 
         if (stripos($form, '<form') === false) {
-            $form = '<form method="post" action="' . $action . '">' . $form . '</form>';
+            $form = '<form method="post" action="' . esc_attr($action) . '">' . $form . '</form>';
         }
 
         // For compatibility
@@ -1612,10 +1604,10 @@ class NewsletterSubscription extends NewsletterModule {
         $checkboxes = '';
         $lists = $this->get_lists_for_subscription();
         foreach ($lists as $list) {
-            $checkboxes .= '<input type="checkbox" name="nl[]" value="' . $list->id . '"> ' . $list->name . '<br />';
+            $checkboxes .= '<input type="checkbox" name="nl[]" value="' . esc_attr($list->id) . '"> ' . esc_attr($list->name) . '<br />';
         }
         $buffer = str_replace('{lists}', $checkboxes, $buffer);
-        $buffer = str_replace('{preferences}', $checkboxes, $buffer);
+        $buffer = str_replace('{preferences}', $checkboxes, $buffer); // For compatibility
         return $buffer;
     }
 
@@ -1650,7 +1642,7 @@ class NewsletterSubscription extends NewsletterModule {
 
         $form = '';
 
-        $form .= '<div class="tnp tnp-subscription-minimal ' . $attrs['class'] . '">';
+        $form .= '<div class="tnp tnp-subscription-minimal ' . esc_attr($attrs['class']) . '">';
         $form .= '<form action="' . esc_attr($this->build_action_url('s')) . '" method="post"';
         if (!empty($attrs['id'])) {
             $form .= ' id="' . esc_attr($attrs['id']) . '"';

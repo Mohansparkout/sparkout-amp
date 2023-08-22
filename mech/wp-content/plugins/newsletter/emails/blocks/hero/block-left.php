@@ -16,7 +16,7 @@ if ($media) {
     .text {
         <?php $text_style->echo_css()?>
         padding: 0 0 15px;
-        line-height: 1.5em;
+        line-height: 1.5;
         margin: 0;
     }
 

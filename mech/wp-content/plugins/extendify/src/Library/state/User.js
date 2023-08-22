@@ -9,10 +9,6 @@ const storage = {
     removeItem: async () => await User.deleteData(),
 }
 
-const isGlobalLibraryEnabled = () =>
-    window.extendifyData.sitesettings === null ||
-    window.extendifyData?.sitesettings?.state?.enabled
-
 const MAX_IMPORTS = 10
 export const useUserStore = create(
     persist(
@@ -27,7 +23,7 @@ export const useUserStore = create(
             imports: 0, // total imports over time
             runningImports: 0, // timed imports, resets to 0 every month
             entryPoint: 'not-set',
-            enabled: isGlobalLibraryEnabled(),
+            // enabled: true, // removed
             canInstallPlugins: false,
             canActivatePlugins: false,
             openOnNewPage: undefined, // This is only being used on the server

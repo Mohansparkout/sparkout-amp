@@ -26,3 +26,31 @@
 
 04-08-2023 05:19:05 - INFO  - 7.8.9 - 62.7 MB/512 MB - Mechno > Backing up options of 0.0.0
 04-08-2023 05:19:05 - INFO  - 7.8.9 - 62.7 MB/512 MB - Mechno > End
+22-08-2023 09:09:21 - INFO  - 7.9.0 - 61.5 MB/512 MB - [cron] > Start upgrade from 7.8.9
+22-08-2023 09:09:21 - INFO  - 7.9.0 - 63.8 MB/512 MB - [cron] > Array
+(
+    [`wp_newsletter_emails`] => Created table `wp_newsletter_emails`
+)
+
+22-08-2023 09:09:21 - INFO  - 7.9.0 - 63.8 MB/512 MB - [cron] > Array
+(
+    [`wp_newsletter_sent`] => Created table `wp_newsletter_sent`
+)
+
+22-08-2023 09:09:22 - INFO  - 7.9.0 - 63.8 MB/512 MB - [cron] > Array
+(
+    [`wp_newsletter`] => Created table `wp_newsletter`
+)
+
+22-08-2023 09:09:22 - INFO  - 7.9.0 - 63.8 MB/512 MB - [cron] > Array
+(
+    [`wp_newsletter_user_logs`] => Created table `wp_newsletter_user_logs`
+)
+
+22-08-2023 09:09:22 - INFO  - 7.9.0 - 63.8 MB/512 MB - [cron] > Array
+(
+    [`wp_newsletter_stats`] => Created table `wp_newsletter_stats`
+)
+
+22-08-2023 09:09:22 - INFO  - 7.9.0 - 63.8 MB/512 MB - [cron] > Backing up options of 7.8.9
+22-08-2023 09:09:22 - INFO  - 7.9.0 - 63.8 MB/512 MB - [cron] > End

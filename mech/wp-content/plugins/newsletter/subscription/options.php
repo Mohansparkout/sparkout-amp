@@ -79,7 +79,7 @@ if ($controls->is_action()) {
 
 //$this->dump($controls->data);
 
-foreach (['confirmed_text', 'confirmed_message', 'confirmation_text', 'confirmation_message', 'subscription_text'] as $key) {
+foreach (['confirmed_text', 'confirmed_message', 'confirmation_text', 'confirmation_message', 'subscription_text', 'error_text'] as $key) {
     if (!empty($controls->data[$key])) {
         $controls->data[$key . '_custom'] = '1';
     }

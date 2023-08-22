@@ -37,7 +37,7 @@ export const TasksList = () => {
             id="assist-tasks-module"
             className="assist-tasks-module w-full border border-gray-300 text-base bg-white p-4 md:p-8 rounded mb-6">
             <div className="flex justify-between items-center gap-2">
-                <h2 className="text-lg leading-tight m-0 flex items-center gap-1">
+                <h2 className="text-lg leading-tight m-0 flex flex-1 items-center gap-1">
                     <span>{__('Tasks', 'extendify')}</span>
                     {notCompleted?.length > 0 ? (
                         <span

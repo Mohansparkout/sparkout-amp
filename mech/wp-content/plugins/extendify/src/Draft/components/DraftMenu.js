@@ -21,9 +21,11 @@ export const DraftMenu = ({ disabled, setInputText, setReady }) => {
                 className="group">
                 <Icon
                     icon={pencil}
-                    className="group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
+                    className="flex-shrink-0 group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
                 />
-                {__('Blog post…', 'extendify')}
+                <span className="whitespace-normal text-left">
+                    {__('Blog post…', 'extendify')}
+                </span>
             </MenuItem>
             <MenuItem
                 disabled={disabled}
@@ -33,9 +35,11 @@ export const DraftMenu = ({ disabled, setInputText, setReady }) => {
                 className="group">
                 <Icon
                     icon={pencil}
-                    className="group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
+                    className="flex-shrink-0 group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
                 />
-                {__('Outline…', 'extendify')}
+                <span className="whitespace-normal text-left">
+                    {__('Outline…', 'extendify')}
+                </span>
             </MenuItem>
             <MenuItem
                 disabled={disabled}
@@ -45,9 +49,11 @@ export const DraftMenu = ({ disabled, setInputText, setReady }) => {
                 className="group">
                 <Icon
                     icon={pencil}
-                    className="group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
+                    className="flex-shrink-0 group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
                 />
-                {__('Poem…', 'extendify')}
+                <span className="whitespace-normal text-left">
+                    {__('Poem…', 'extendify')}
+                </span>
             </MenuItem>
             <MenuItem
                 disabled={disabled}
@@ -59,9 +65,11 @@ export const DraftMenu = ({ disabled, setInputText, setReady }) => {
                 className="group">
                 <Icon
                     icon={pencil}
-                    className="group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
+                    className="flex-shrink-0 group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
                 />
-                {__('Press release…', 'extendify')}
+                <span className="whitespace-normal text-left">
+                    {__('Press release…', 'extendify')}
+                </span>
             </MenuItem>
             <MenuItem
                 disabled={disabled}
@@ -73,9 +81,11 @@ export const DraftMenu = ({ disabled, setInputText, setReady }) => {
                 className="group">
                 <Icon
                     icon={pencil}
-                    className="group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
+                    className="flex-shrink-0 group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
                 />
-                {__('Pros and cons list…', 'extendify')}
+                <span className="whitespace-normal text-left">
+                    {__('Pros and cons list…', 'extendify')}
+                </span>
             </MenuItem>
             <MenuItem
                 disabled={disabled}
@@ -87,9 +97,11 @@ export const DraftMenu = ({ disabled, setInputText, setReady }) => {
                 className="group">
                 <Icon
                     icon={pencil}
-                    className="group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
+                    className="flex-shrink-0 group-hover:text-current text-design-main fill-current w-5 h-5 mr-2"
                 />
-                {__('Job description…', 'extendify')}
+                <span className="whitespace-normal text-left">
+                    {__('Job description…', 'extendify')}
+                </span>
             </MenuItem>
         </MenuGroup>
     )
