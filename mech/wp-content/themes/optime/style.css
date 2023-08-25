@@ -33,15 +33,15 @@ font-size:18px !important;
 .primary-menu > li > a:hover:after, .primary-menu > li.current_page_item > a:after, .primary-menu > li.current-menu-item > a:after, .primary-menu > li.current_page_ancestor > a:after, .primary-menu > li.current-menu-ancestor > a:after {
     bottom: 20px !important;
 }
-.training-lists h3 {
+.training-lists h3, .software-training-details >h3 {
 	color:#0496eb;
 	font-size:22px;
 }
-.training-detail {
+.training-detail, .software-training-details {
 	    box-shadow: 0 5px 60px 0 rgba(40, 40, 40, 0.1);
 	    margin:15px;
 	padding:25px;
 }
-.training-detail p {
+.training-detail p, .software-training-details p {
 	text-align:justify;
 }
